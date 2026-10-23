@@ -8,6 +8,13 @@ Two Arduino implementations of reactive obstacle avoidance: a servo-scanned sing
 
 ![Actual obstacle-avoidance robot with three ultrasonic modules on a wheeled chassis.](images/obstacle-avoidance.jpg)
 
+## Video Demonstration
+
+The following video demonstrates the line follower robot's
+operation during the project.
+
+[Watch the Robot Demonstration](https://drive.google.com/file/d/1UD-COtnHxfG2kObR3-TzQL1gBGlt0E1A/view?usp=sharing)
+
 ## Objectives
 
 - Servo-scanned one-sensor variant
