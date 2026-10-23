@@ -1,45 +1,45 @@
-# Robopuff: Line Follower Robot
+# Fuzzy Logic Obstacle Avoidance Robot
 
 ## Overview
 
-A collaborative Arduino robot controller using five digital line-sensor inputs and differential motor steering.
+Two Arduino implementations of reactive obstacle avoidance: a servo-scanned single ultrasonic sensor and a three-sensor fuzzy controller.
 
 ## Prototype Photograph
 
-![Supplied Robopuff prototype photograph showing a wheeled chassis, ultrasonic module and servo.](images/line-follower.jpg)
+![Actual obstacle-avoidance robot with three ultrasonic modules on a wheeled chassis.](images/obstacle-avoidance.jpg)
 
 ## Objectives
 
-- Five sensor inputs
-- Forward/left/right motion
-- Serial diagnostics
+- Servo-scanned one-sensor variant
+- Three-sensor variant
+- Forward/reverse/turn control
 
 ## Technologies Used
 
-Arduino C++, Digital line sensors, PWM motor control.
+Arduino C++, NewPing, Servo, Fuzzy.h, Ultrasonic sensors.
 
 ## Methodology and Implementation
 
-- Five active-low digital inputs on A0–A4 are sampled every 50 ms using millis().
-- Center detection, or both near-side sensors, selects forward motion; left/right detection selects a pivot turn.
-- Motor direction pins 8–11 and PWM pins 3/5 control two drive sides; serial output reports sensor state and direction.
+- Single-sensor version scans left/right with a servo and computes near/far memberships over the 20–50 cm transition. A dominant-rule function returns a direction.
+- Three-sensor version uses NewPing for left/front/right ranges, Fuzzy.h memberships and four rules; defuzzification selects forward, turn, reverse or stop branches.
+- Three-sensor code maps no-echo readings to 200 cm and updates after a 300 ms delay. Two PWM motor channels drive the chassis.
 
 ## Results and Outputs
 
-- Source implements forward motion at PWM 140 and asymmetric turning at PWM 80/100. These are control settings, not measured speed.
-- An actual prototype photograph and a local demonstration video are available. No lap time, tracking accuracy or success-rate measurement is documented.
+- Two separate source implementations define distance-based motor control. The provided photograph shows three forward-facing ultrasonic modules.
+- A local group video exists; no quantified collision rate, route-completion rate or navigation-time benchmark is documented.
 
 ## Limitations
 
-- No explicit stop or recovery branch when all sensors lose the line; the previous motor command persists.
-- The supplied photograph shows an ultrasonic/servo-equipped prototype; the five line-sensor array and exact wiring are not visible, so the photo does not verify the firmware hardware configuration.
-- Individual responsibilities are not documented in the supplied source. Video participant permissions are unconfirmed.
+- In the single-sensor caller, every fuzzy decision other than RIGHT becomes a left turn, including FORWARD and REVERSE.
+- PWM use on A3/A4 in the single-sensor sketch needs checking against the actual board; no-echo-as-far behavior needs hardware testing.
+- Individual roles are not stated in the available source files. Video sharing rights and participant permissions are unconfirmed.
 
 ## Contributors
 
 Collaborative academic project by Tischia Ann Olivares, Michelle Tercero and Rona Mae Quite.
 
-
 ## Source Files
 
-- [Robopuff_LineFollower.ino](Robopuff_LineFollower/Robopuff_LineFollower.ino)
+- [OneSensor_Fuzzy.ino](OneSensor_Fuzzy/OneSensor_Fuzzy.ino)
+- [ThreeSensors_Fuzzy.ino](ThreeSensors_Fuzzy/ThreeSensors_Fuzzy.ino)
